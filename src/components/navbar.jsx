@@ -32,8 +32,6 @@ function Navbar() {
                 p-1
                 rounded-xl
             ">
-
-                <Button text="Home" to="/home" />
                 <Button text="Weekly" to="weekly" />
                 <Button text="Monthly" to="Monthly" />
                 <Button text="Yearly" to="Yearly" />

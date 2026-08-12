@@ -1,10 +1,53 @@
-import React from 'react'
+import React from "react";
 
-function Input() {
+function Input({
+    text = "",
+    type = "text",
+    placeholder = "",
+    onChange,
+    value = "",
+}) {
     return (
-        <>
-        </>
-    )
+        <div className="w-full">
+
+            <label className="
+                block
+                text-sm
+                font-medium
+                text-gray-300
+                mb-2
+            ">
+                {text}
+            </label>
+
+            <input
+                type={type}
+                placeholder={placeholder}
+                onChange={onChange}
+                value={value}
+                className="
+                    w-full
+                    px-4 py-3
+                    bg-gray-900
+                    border border-gray-700
+                    rounded-xl
+                    text-white
+                    placeholder-gray-500
+                    outline-none
+
+                    focus:border-green-500
+                    focus:ring-2
+                    focus:ring-green-500/20
+
+                    hover:border-gray-600
+
+                    transition-all
+                    duration-200
+                "
+            />
+
+        </div>
+    );
 }
 
-export default Input
+export default Input;

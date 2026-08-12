@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Footer() {
     return (
-        <footer className="w-full bg-gray-950 border-t border-gray-800 mt-20">
+        <footer className="w-full bg-gray-950 border-t border-gray-800">
 
             <div className="max-w-7xl mx-auto px-6 py-12">
 
@@ -66,19 +67,19 @@ function Footer() {
 
                         <div className="space-y-3">
 
-                            <a
-                                href="#"
+                            <Link
+                                to="home"
                                 className="block text-sm text-gray-400 hover:text-green-400 transition"
                             >
                                 Dashboard
-                            </a>
+                            </Link>
 
-                            <a
-                                href="#"
+                            <Link
+                                to="history"
                                 className="block text-sm text-gray-400 hover:text-green-400 transition"
                             >
                                 History
-                            </a>
+                            </Link>
 
                             <a
                                 href="#"
@@ -127,7 +128,7 @@ function Footer() {
                             <a
                                 href="mailto:example@email.com"
                                 className="
-                                    w-10 h-10
+                                    w-20 h-10
                                     rounded-xl
                                     bg-gray-900
                                     border border-gray-800
@@ -139,7 +140,7 @@ function Footer() {
                                 "
                                 aria-label="Contact"
                             >
-                                @
+                                @ mail
                             </a>
 
                         </div>
@@ -166,10 +167,18 @@ function Footer() {
                         © 2026 ExpenseTracker. Built with React.
                     </p>
 
-                    <p className="flex items-center gap-1">
-                        Made with
-                        <span className="text-red-400">♥</span>
-                        by Hitesh
+                    <p className="flex items-center gap-4">
+                        <Link to="contact">
+                            contact
+                        </Link>
+                        <Link to="about">
+                            about
+                        </Link>
+                        <div className="flex gap-1">
+                            Made with
+                            <span className="text-red-400">♥</span>
+                            by Hitesh
+                        </div>
                     </p>
 
                 </div>
