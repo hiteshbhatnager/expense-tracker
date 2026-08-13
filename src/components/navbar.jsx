@@ -1,7 +1,10 @@
 import React from "react";
 import Button from "./button";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+    const navigate = useNavigate();
+
     return (
         <nav className="
             w-full
@@ -29,13 +32,30 @@ function Navbar() {
                 flex items-center
                 gap-2
                 bg-gray-800
-                p-1
+                p-2
                 rounded-xl
+                w-[40%]
             ">
-                <Button text="Weekly" to="weekly" />
-                <Button text="Monthly" to="Monthly" />
-                <Button text="Yearly" to="Yearly" />
-                <Button text="History" to="History" />
+                <Button
+                    text="Home"
+                    onClick={() => navigate("/")}
+                />
+
+
+                <Button
+                    text="History"
+                    onClick={() => navigate("/history")}
+                />
+
+                <Button
+                    text="Sign Up"
+                    onClick={() => navigate("/signup")}
+                />
+
+                <Button
+                    text="Login"
+                    onClick={() => navigate("/login")}
+                />
 
             </div>
 

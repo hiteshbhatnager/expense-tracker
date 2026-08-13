@@ -1,32 +1,27 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-
 function Button({
-    type = "",
+    type = "button",
     text,
-    onclick,
-    to
+    onClick,
 }) {
-
-    const navigate = useNavigate()
     return (
-        <>
-            <button
-                onClick={() => navigate(to)}
-                className="
-                    px-4 py-2
-                    rounded-lg
-                    text-sm
-                    font-medium
-                    text-gray-300
-                    hover:text-white
-                    hover:bg-gray-700
-                    transition
-                ">
-                {text}
-            </button>
-        </>
-    )
+        <button
+            type={type}
+            onClick={onClick}
+            className="
+                w-full
+                px-4 py-3
+                rounded-xl
+                bg-green-500
+                text-gray-950
+                font-semibold
+                hover:bg-green-400
+                active:scale-[0.98]
+                transition
+            "
+        >
+            {text}
+        </button>
+    );
 }
 
-export default Button
+export default Button;

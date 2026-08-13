@@ -41,6 +41,22 @@ function Home() {
                         text="- Spend Money"
                     />
 
+                </div >
+                <div className="flex gap-4 mt-6 flex-col">
+                    <Button
+                        text="Weekly"
+                        onClick={() => navigate("/weekly")}
+                    />
+
+                    <Button
+                        text="Monthly"
+                        onClick={() => navigate("/monthly")}
+                    />
+
+                    <Button
+                        text="Yearly"
+                        onClick={() => navigate("/yearly")}
+                    />
                 </div>
 
             </section>
