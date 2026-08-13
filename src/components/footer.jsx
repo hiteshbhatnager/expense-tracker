@@ -167,7 +167,7 @@ function Footer() {
                         © 2026 ExpenseTracker. Built with React.
                     </p>
 
-                    <p className="flex items-center gap-4">
+                    <div className="flex items-center gap-4">
                         <Link to="contact">
                             contact
                         </Link>
@@ -179,7 +179,7 @@ function Footer() {
                             <span className="text-red-400">♥</span>
                             by Hitesh
                         </div>
-                    </p>
+                    </div>
 
                 </div>
 

@@ -1,27 +1,46 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/input";
 import Button from "../components/button";
+import authService from "../appwrite/auth";
 
 function Signup() {
+
+    const navigate = useNavigate();
+
     const [form, setForm] = useState({
         name: "",
         email: "",
-        password: "",
+        password: ""
     });
+
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setForm({
             ...form,
-            [e.target.name]: e.target.value,
+            [e.target.name]: e.target.value
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Appwrite signup logic will go here
-        console.log(form);
+        try {
+            setError("");
+            setLoading(true);
+
+            await authService.signup(form);
+
+            navigate("/");
+
+        } catch (error) {
+            setError(error.message);
+
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -29,35 +48,26 @@ function Signup() {
 
             <div className="w-full max-w-md">
 
-                {/* Brand */}
-                <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold">
-                        Expense<span className="text-green-400">Tracker</span>
-                    </h1>
-
-                    <p className="text-gray-500 mt-2">
-                        Start managing your money smarter.
-                    </p>
-                </div>
-
-
-                {/* Card */}
                 <div className="
                     bg-gray-900
                     border border-gray-800
                     rounded-2xl
                     p-7
-                    shadow-2xl
                 ">
 
-                    <h2 className="text-2xl font-bold">
-                        Create account
-                    </h2>
+                    <h1 className="text-3xl font-bold">
+                        Create Account
+                    </h1>
 
-                    <p className="text-gray-400 text-sm mt-2">
-                        Create your account to start tracking expenses.
+                    <p className="text-gray-400 mt-2">
+                        Start tracking your money.
                     </p>
 
+                    {error && (
+                        <p className="text-red-400 text-sm mt-4">
+                            {error}
+                        </p>
+                    )}
 
                     <form
                         onSubmit={handleSubmit}
@@ -66,50 +76,43 @@ function Signup() {
 
                         <Input
                             text="Name"
-                            type="text"
-                            placeholder="Enter your name"
                             name="name"
+                            type="text"
+                            placeholder="Your name"
                             value={form.name}
                             onChange={handleChange}
                         />
 
                         <Input
                             text="Email"
+                            name="email"
                             type="email"
                             placeholder="you@example.com"
-                            name="email"
                             value={form.email}
                             onChange={handleChange}
                         />
 
                         <Input
                             text="Password"
-                            type="password"
-                            placeholder="Create a password"
                             name="password"
+                            type="password"
+                            placeholder="Create password"
                             value={form.password}
                             onChange={handleChange}
                         />
 
                         <Button
                             type="submit"
-                            text="Create Account"
+                            text={loading ? "Creating..." : "Create Account"}
                         />
 
                     </form>
 
-
-                    <p className="
-                        text-center
-                        text-sm
-                        text-gray-400
-                        mt-6
-                    ">
+                    <p className="text-gray-400 text-sm text-center mt-6">
                         Already have an account?{" "}
-
                         <Link
                             to="/login"
-                            className="text-green-400 hover:text-green-300"
+                            className="text-green-400"
                         >
                             Login
                         </Link>

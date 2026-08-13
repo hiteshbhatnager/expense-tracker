@@ -1,26 +1,51 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/input";
 import Button from "../components/button";
+import authService from "../appwrite/auth";
+import { useDispatch } from "react-redux";
+import { login } from "../context/authslice";
 
 function Login() {
+    const dispatch = useDispatch()
+
+    const navigate = useNavigate();
+
     const [form, setForm] = useState({
         email: "",
-        password: "",
+        password: ""
     });
+
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setForm({
             ...form,
-            [e.target.name]: e.target.value,
+            [e.target.name]: e.target.value
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Appwrite login logic will go here
-        console.log(form);
+        try {
+            setError("");
+            setLoading(true);
+
+            await authService.login(form);
+            const user = await authService.getuser();
+
+            dispatch(login(user))
+
+            navigate("/");
+
+        } catch (error) {
+            setError(error.message);
+
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -28,37 +53,26 @@ function Login() {
 
             <div className="w-full max-w-md">
 
-                {/* Brand */}
-                <div className="text-center mb-8">
-
-                    <h1 className="text-3xl font-bold">
-                        Expense<span className="text-green-400">Tracker</span>
-                    </h1>
-
-                    <p className="text-gray-500 mt-2">
-                        Welcome back. Let's check your money.
-                    </p>
-
-                </div>
-
-
-                {/* Card */}
                 <div className="
                     bg-gray-900
                     border border-gray-800
                     rounded-2xl
                     p-7
-                    shadow-2xl
                 ">
 
-                    <h2 className="text-2xl font-bold">
-                        Welcome back
-                    </h2>
+                    <h1 className="text-3xl font-bold">
+                        Welcome Back
+                    </h1>
 
-                    <p className="text-gray-400 text-sm mt-2">
-                        Login to continue to your dashboard.
+                    <p className="text-gray-400 mt-2">
+                        Login to your ExpenseTracker.
                     </p>
 
+                    {error && (
+                        <p className="text-red-400 text-sm mt-4">
+                            {error}
+                        </p>
+                    )}
 
                     <form
                         onSubmit={handleSubmit}
@@ -67,56 +81,36 @@ function Login() {
 
                         <Input
                             text="Email"
+                            name="email"
                             type="email"
                             placeholder="you@example.com"
-                            name="email"
                             value={form.email}
                             onChange={handleChange}
                         />
 
                         <Input
                             text="Password"
-                            type="password"
-                            placeholder="Enter your password"
                             name="password"
+                            type="password"
+                            placeholder="Your password"
                             value={form.password}
                             onChange={handleChange}
                         />
 
-                        <div className="flex justify-end">
-                            <button
-                                type="button"
-                                className="
-                                    text-sm
-                                    text-green-400
-                                    hover:text-green-300
-                                "
-                            >
-                                Forgot password?
-                            </button>
-                        </div>
-
                         <Button
                             type="submit"
-                            text="Login"
+                            text={loading ? "Logging in..." : "Login"}
                         />
 
                     </form>
 
-
-                    <p className="
-                        text-center
-                        text-sm
-                        text-gray-400
-                        mt-6
-                    ">
+                    <p className="text-gray-400 text-sm text-center mt-6">
                         Don't have an account?{" "}
-
                         <Link
                             to="/signup"
-                            className="text-green-400 hover:text-green-300"
+                            className="text-green-400"
                         >
-                            Create account
+                            Sign up
                         </Link>
                     </p>
 

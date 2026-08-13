@@ -47,4 +47,8 @@ export class Authservice {
             throw error
         }
     }
+
 }
+const authservice = new Authservice()
+
+export default authservice
