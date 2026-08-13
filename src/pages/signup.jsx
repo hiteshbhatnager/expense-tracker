@@ -3,10 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/input";
 import Button from "../components/button";
 import authService from "../appwrite/auth";
+import { useDispatch } from "react-redux";
+import { login } from '../context/authslice'
 
 function Signup() {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     const [form, setForm] = useState({
         name: "",
@@ -31,7 +34,8 @@ function Signup() {
             setError("");
             setLoading(true);
 
-            await authService.signup(form);
+            const user = await authService.signup(form);
+            dispatch(login(user))
 
             navigate("/");
 

@@ -1,9 +1,22 @@
 import React from "react";
 import Button from "../components/button";
+import authservice from '../appwrite/auth'
+import { useSelector } from "react-redux";
 
 function Home() {
+
+    const user = useSelector((state) => state.auth.user)
+
     return (
         <main className="min-h-screen bg-gray-950 text-white p-6">
+
+            {
+                user ? (
+                    <p className="p-9 mx-19">Hi {user?.name?.toUpperCase()} track you expense</p>
+                ) : (
+                    ""
+                )
+            }
 
             {/* Balance */}
             <section className="
@@ -42,22 +55,6 @@ function Home() {
                     />
 
                 </div >
-                <div className="flex gap-4 mt-6 flex-col">
-                    <Button
-                        text="Weekly"
-                        onClick={() => navigate("/weekly")}
-                    />
-
-                    <Button
-                        text="Monthly"
-                        onClick={() => navigate("/monthly")}
-                    />
-
-                    <Button
-                        text="Yearly"
-                        onClick={() => navigate("/yearly")}
-                    />
-                </div>
 
             </section>
 
@@ -206,6 +203,23 @@ function Home() {
 
                     </div>
 
+                </div>
+
+                <div className="flex gap-4 mt-6 flex-col">
+                    <Button
+                        text="Weekly"
+                        onClick={() => navigate("/weekly")}
+                    />
+
+                    <Button
+                        text="Monthly"
+                        onClick={() => navigate("/monthly")}
+                    />
+
+                    <Button
+                        text="Yearly"
+                        onClick={() => navigate("/yearly")}
+                    />
                 </div>
 
             </section>
