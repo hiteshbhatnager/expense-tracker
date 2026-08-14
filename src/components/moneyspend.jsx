@@ -10,27 +10,52 @@ function SpendMoney({
     setData
 }) {
 
-    const [balance, setBalance] = useState("")
-    const navigate = useNavigate()
+    const [balance, setBalance] = useState("");
+    const [source, setSource] = useState("");
+    const [date, setDate] = useState(
+        new Date().toISOString().split("T")[0]
+    );
+
+    const navigate = useNavigate();
 
     const onSubmit = () => {
 
-        const currentAmount = Number(amount)
-        const amountSpend = Number(balance)
+        const currentAmount = Number(amount);
+        const amountSpend = Number(balance);
 
+        // Empty / invalid amount
         if (amountSpend <= 0) {
-            return
+            return;
         }
 
+        // Not enough money
         if (amountSpend > currentAmount) {
-            alert("you don't have enough money")
+            alert("You don't have enough money");
+            return;
         }
 
-        setAmount(currentAmount - amountSpend)
+        // Update balance
+        setAmount(currentAmount - amountSpend);
 
-        setBalance("")
-        navigate('/')
-    }
+        // Save transaction
+        setData((previous) => [
+            ...previous,
+            {
+                id: Date.now(),
+                add: false,
+                amount: amountSpend,
+                source: source,
+                date: date
+            }
+        ]);
+
+        // Reset form
+        setBalance("");
+        setSource("");
+        setDate(new Date().toISOString().split("T")[0]);
+
+        navigate("/");
+    };
 
     return (
         <main className="min-h-screen bg-gray-950 text-white px-4 py-10">
@@ -39,6 +64,7 @@ function SpendMoney({
 
                 {/* Header */}
                 <div className="mb-8">
+
                     <p className="text-red-400 text-sm font-medium">
                         SPEND MONEY
                     </p>
@@ -50,6 +76,11 @@ function SpendMoney({
                     <p className="text-gray-500 mt-2">
                         Record where your money went.
                     </p>
+
+                    <p className="text-gray-400 mt-3">
+                        Current Balance: ₹{amount}
+                    </p>
+
                 </div>
 
 
@@ -68,8 +99,11 @@ function SpendMoney({
                         type="number"
                         placeholder="Enter amount"
                         value={balance}
-                        onChange={(e) => setBalance(e.target.value)}
+                        onChange={(e) =>
+                            setBalance(e.target.value)
+                        }
                     />
+
 
                     {/* Category */}
                     <div>
@@ -85,6 +119,10 @@ function SpendMoney({
                         </label>
 
                         <select
+                            value={source}
+                            onChange={(e) =>
+                                setSource(e.target.value)
+                            }
                             className="
                                 w-full
                                 px-4 py-3
@@ -97,6 +135,7 @@ function SpendMoney({
                                 transition
                             "
                         >
+
                             <option value="">
                                 Select category
                             </option>
@@ -124,6 +163,7 @@ function SpendMoney({
                             <option value="other">
                                 Other
                             </option>
+
                         </select>
 
                     </div>
@@ -144,6 +184,10 @@ function SpendMoney({
 
                         <input
                             type="date"
+                            value={date}
+                            onChange={(e) =>
+                                setDate(e.target.value)
+                            }
                             className="
                                 w-full
                                 px-4 py-3

@@ -10,8 +10,11 @@ function AddMoney({
     setData
 }) {
 
-    const [balance, setBalance] = useState(0)
+    const [balance, setBalance] = useState("")
     const [source, setSource] = useState('')
+    const [date, setDate] = useState(
+        new Date().toISOString().split("T")[0]
+    );
     const navigate = useNavigate()
 
     const onSubmit = () => {
@@ -38,6 +41,7 @@ function AddMoney({
 
         setBalance("")
         setSource("")
+        setDate(new Date().toISOString().split("T")[0])
         navigate('/')
     }
 
@@ -142,12 +146,15 @@ function AddMoney({
                             font-medium
                             text-gray-300
                             mb-2
-                        ">
+                        "
+                        >
                             Date
                         </label>
 
                         <input
                             type="date"
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)}
                             className="
                                 w-full
                                 px-4 py-3
