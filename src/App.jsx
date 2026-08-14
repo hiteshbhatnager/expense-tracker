@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import { Home, About, Contact, SignUp, Login } from './pages'
+import { Add, History, Spend } from './components'
 import Layout from './layout'
 import authservice from './appwrite/auth'
 import { login, logout } from './context/authslice'
@@ -36,6 +37,9 @@ function App() {
           <Route path="contact" element={<Contact />} />
           <Route path='signup' element={<SignUp />} />
           <Route path='login' element={<Login />} />
+          <Route path='add' element={<Add />} />
+          <Route path='history' element={<History />} />
+          <Route path='spend' element={<Spend />} />
         </Route>
       </Routes>
     </>

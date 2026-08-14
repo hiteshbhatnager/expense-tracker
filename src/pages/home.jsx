@@ -2,10 +2,12 @@ import React from "react";
 import Button from "../components/button";
 import authservice from '../appwrite/auth'
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
 
     const user = useSelector((state) => state.auth.user)
+    const navigate = useNavigate()
 
     return (
         <main className="min-h-screen bg-gray-950 text-white p-6">
@@ -48,10 +50,12 @@ function Home() {
 
                     <Button
                         text="+ Add Money"
+                        onClick={() => navigate("/add")}
                     />
 
                     <Button
                         text="- Spend Money"
+                        onClick={() => navigate("/spend")}
                     />
 
                 </div >
@@ -77,7 +81,9 @@ function Home() {
                         text-gray-400
                         hover:text-white
                         transition
-                    ">
+                    "
+                        onClick={() => navigate("/history")}
+                    >
                         View all
                     </button>
 

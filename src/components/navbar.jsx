@@ -66,6 +66,10 @@ function Navbar() {
                     onClick={() => navigate("/")}
                 />
 
+                <Button
+                    text="History"
+                    onClick={() => navigate("/history")}
+                />
 
                 {/* Authentication */}
                 {user ? (
