@@ -1,8 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../components/input";
 import Button from "../components/button";
+import { useNavigate } from "react-router-dom";
 
-function SpendMoney() {
+function SpendMoney({
+    amount,
+    setAmount,
+    data,
+    setData
+}) {
+
+    const [balance, setBalance] = useState("")
+    const navigate = useNavigate()
+
+    const onSubmit = () => {
+
+        const currentAmount = Number(amount)
+        const amountSpend = Number(balance)
+
+        if (amountSpend <= 0) {
+            return
+        }
+
+        if (amountSpend > currentAmount) {
+            alert("you don't have enough money")
+        }
+
+        setAmount(currentAmount - amountSpend)
+
+        setBalance("")
+        navigate('/')
+    }
+
     return (
         <main className="min-h-screen bg-gray-950 text-white px-4 py-10">
 
@@ -38,16 +67,9 @@ function SpendMoney() {
                         text="Amount"
                         type="number"
                         placeholder="Enter amount"
+                        value={balance}
+                        onChange={(e) => setBalance(e.target.value)}
                     />
-
-
-                    {/* Where */}
-                    <Input
-                        text="Spent On"
-                        type="text"
-                        placeholder="e.g. Food, Travel, Shopping"
-                    />
-
 
                     {/* Category */}
                     <div>
@@ -140,6 +162,7 @@ function SpendMoney() {
                     {/* Button */}
                     <Button
                         text="- Spend Money"
+                        onClick={onSubmit}
                     />
 
                 </div>

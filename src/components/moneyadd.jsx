@@ -1,8 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../components/input";
 import Button from "../components/button";
+import { useNavigate } from "react-router-dom";
 
-function AddMoney() {
+function AddMoney({
+    amount,
+    setAmount,
+    data,
+    setData
+}) {
+
+    const [balance, setBalance] = useState(0)
+    const [source, setSource] = useState('')
+    const navigate = useNavigate()
+
+    const onSubmit = () => {
+
+        const currentAmount = Number(amount)
+        const amountAdd = Number(balance)
+
+        if (amountAdd <= 0) {
+            return
+        }
+
+        setAmount(currentAmount + amountAdd)
+
+        setData((previous) => [
+            ...previous,
+            {
+                id: Date.now(),
+                add: true,
+                amount: amountAdd,
+                source: source,
+                date: new Date().toLocaleDateString()
+            }
+        ]);
+
+        setBalance("")
+        setSource("")
+        navigate('/')
+    }
+
+
     return (
         <main className="min-h-screen bg-gray-950 text-white px-4 py-10">
 
@@ -38,16 +77,9 @@ function AddMoney() {
                         text="Amount"
                         type="number"
                         placeholder="Enter amount"
+                        value={balance}
+                        onChange={(e) => setBalance(e.target.value)}
                     />
-
-
-                    {/* Source */}
-                    <Input
-                        text="Source"
-                        type="text"
-                        placeholder="e.g. Salary, Pocket Money"
-                    />
-
 
                     {/* Category */}
                     <div>
@@ -74,6 +106,8 @@ function AddMoney() {
                                 focus:border-green-500
                                 transition
                             "
+                            value={source}
+                            onChange={(e) => setSource(e.target.value)}
                         >
                             <option value="">
                                 Select category
@@ -132,6 +166,7 @@ function AddMoney() {
                     {/* Button */}
                     <Button
                         text="+ Add Money"
+                        onClick={onSubmit}
                     />
 
                 </div>
