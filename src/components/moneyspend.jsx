@@ -98,6 +98,7 @@ function SpendMoney({
                         text="Amount"
                         type="number"
                         placeholder="Enter amount"
+                        min="0"
                         value={balance}
                         onChange={(e) =>
                             setBalance(e.target.value)

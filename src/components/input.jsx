@@ -6,6 +6,7 @@ function Input({
     placeholder = "",
     name = "",
     value = "",
+    min = "",
     onChange,
 }) {
     return (
@@ -27,6 +28,7 @@ function Input({
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
+                min={min}
                 className="
                     w-full
                     px-4 py-3

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "../components/button";
 import authservice from '../appwrite/auth'
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { List } from "../components";
 
 function Home({
     amount,
@@ -67,6 +68,28 @@ function Home({
 
             </section>
 
+            <div className="
+                max-w-5xl
+                mx-auto
+                mt-8
+            ">
+                {/* <div className="flex gap-4 mt-6 flex-col">
+                    <Button
+                        text="Weekly"
+                        onClick={() => navigate("/weekly")}
+                    />
+
+                    <Button
+                        text="Monthly"
+                        onClick={() => navigate("/monthly")}
+                    />
+
+                    <Button
+                        text="Yearly"
+                        onClick={() => navigate("/yearly")}
+                    />
+                </div> */}
+            </div>
 
             {/* History */}
             <section className="
@@ -96,24 +119,7 @@ function Home({
 
 
                 {/* Transaction list */}
-                <History />
-
-                <div className="flex gap-4 mt-6 flex-col">
-                    <Button
-                        text="Weekly"
-                        onClick={() => navigate("/weekly")}
-                    />
-
-                    <Button
-                        text="Monthly"
-                        onClick={() => navigate("/monthly")}
-                    />
-
-                    <Button
-                        text="Yearly"
-                        onClick={() => navigate("/yearly")}
-                    />
-                </div>
+                <List data={data} />
 
             </section>
 

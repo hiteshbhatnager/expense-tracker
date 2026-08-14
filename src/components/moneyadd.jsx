@@ -80,6 +80,7 @@ function AddMoney({
                     <Input
                         text="Amount"
                         type="number"
+                        min="0"
                         placeholder="Enter amount"
                         value={balance}
                         onChange={(e) => setBalance(e.target.value)}
