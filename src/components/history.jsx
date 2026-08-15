@@ -1,7 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { List } from './index'
+import database from "../database/db";
+import { useSelector } from "react-redux";
 
-function History({ data = [] }) {
+async function History(
+    {
+        data,
+        setData
+    }
+) {
+
+    const user = useSelector((state) => state.auth.user)
+
+    useEffect(() => {
+        const getHistory = async () => {
+            if (user) {
+                return
+            }
+            try {
+                const result = await database.getTransactions(user.$id)
+                setData(result.documents);
+
+            } catch (error) {
+
+                console.error("Failed to get history:", error);
+
+            }
+        }
+
+        getHistory()
+
+    }, [user])
+
     return (
         <main className="min-h-screen bg-gray-950 text-white px-4 py-10">
 

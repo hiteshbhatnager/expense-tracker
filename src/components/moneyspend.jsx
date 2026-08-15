@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Input from "../components/input";
 import Button from "../components/button";
 import { useNavigate } from "react-router-dom";
+import database from "../database/db";
+import { useSelector } from "react-redux";
 
 function SpendMoney({
     amount,
@@ -15,29 +17,35 @@ function SpendMoney({
     const [date, setDate] = useState(
         new Date().toISOString().split("T")[0]
     );
+    const user = useSelector((state) => state.auth.user)
 
     const navigate = useNavigate();
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
 
         const currentAmount = Number(amount);
         const amountSpend = Number(balance);
 
-        // Empty / invalid amount
         if (amountSpend <= 0) {
             return;
         }
 
-        // Not enough money
         if (amountSpend > currentAmount) {
             alert("You don't have enough money");
             return;
         }
 
-        // Update balance
         setAmount(currentAmount - amountSpend);
 
-        // Save transaction
+        database.createTransaction({
+            id: user.$id,
+            add: false,
+            amount: amountSpend,
+            source: source,
+            date: date
+        })
+
+
         setData((previous) => [
             ...previous,
             {

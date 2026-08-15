@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Input from "../components/input";
 import Button from "../components/button";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import database from "../database/db";
 
 function AddMoney({
     amount,
@@ -15,9 +17,10 @@ function AddMoney({
     const [date, setDate] = useState(
         new Date().toISOString().split("T")[0]
     );
+    const user = useSelector((state) => state.auth.user)
     const navigate = useNavigate()
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
 
         const currentAmount = Number(amount)
         const amountAdd = Number(balance)
@@ -28,6 +31,14 @@ function AddMoney({
 
         setAmount(currentAmount + amountAdd)
 
+        database.createTransaction({
+            id: user.$id,
+            add: true,
+            amount: amountAdd,
+            source: source,
+            date: date
+        })
+
         setData((previous) => [
             ...previous,
             {
@@ -35,7 +46,7 @@ function AddMoney({
                 add: true,
                 amount: amountAdd,
                 source: source,
-                date: new Date().toLocaleDateString()
+                date: date
             }
         ]);
 
