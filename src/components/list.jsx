@@ -1,7 +1,7 @@
 import React from "react";
 
 
-function List({ data = [] }) {
+function List({ data }) {
     return (
         <section className="w-full">
 

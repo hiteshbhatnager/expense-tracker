@@ -41,8 +41,8 @@ export class Database {
     async getTransactions(userId) {
         try {
             return await this.database.listDocuments(
-                import.meta.env.VITE_DATABASE_ID,
-                import.meta.env.VITE_COLLECTION_ID,
+                import.meta.env.VITE_APPWRITE_DATABASE_ID,
+                import.meta.env.VITE_APPWRITE_COLLECTION_ID,
                 [
                     Query.equal("userId", userId)
                 ]

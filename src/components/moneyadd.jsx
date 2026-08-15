@@ -3,7 +3,7 @@ import Input from "../components/input";
 import Button from "../components/button";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import database from "../database/db";
+import database from "../appwrite/database/db";
 
 function AddMoney({
     amount,
@@ -29,26 +29,32 @@ function AddMoney({
             return
         }
 
-        setAmount(currentAmount + amountAdd)
-
-        database.createTransaction({
-            userId: user.$id,
-            add: true,
-            amount: amountAdd,
-            source: source,
-            date: date
-        })
-
-        setData((previous) => [
-            ...previous,
-            {
-                id: Date.now(),
+        try {
+            const result = await database.createTransaction({
+                userId: user.$id,
                 add: true,
                 amount: amountAdd,
                 source: source,
                 date: date
-            }
-        ]);
+            })
+
+            setAmount(currentAmount + amountAdd)
+
+            setData((previous) => [
+                ...previous,
+                {
+                    id: result.$id,
+                    add: true,
+                    amount: amountAdd,
+                    source: source,
+                    date: date
+                }
+            ]);
+        } catch (error) {
+            alert("Failed to add transaction. Please try again.");
+            setAmount(currentAmount);
+            return;
+        }
 
         setBalance("")
         setSource("")

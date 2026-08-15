@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Input from "../components/input";
 import Button from "../components/button";
 import { useNavigate } from "react-router-dom";
-import database from "../database/db";
+import database from "../appwrite/database/db";
 import { useSelector } from "react-redux";
 
 function SpendMoney({
@@ -35,27 +35,32 @@ function SpendMoney({
             return;
         }
 
-        setAmount(currentAmount - amountSpend);
-
-        database.createTransaction({
-            userId: user.$id,
-            add: false,
-            amount: amountSpend,
-            source: source,
-            date: date
-        })
-
-
-        setData((previous) => [
-            ...previous,
-            {
-                id: Date.now(),
+        try {
+            const result = await database.createTransaction({
+                userId: user.$id,
                 add: false,
                 amount: amountSpend,
                 source: source,
                 date: date
-            }
-        ]);
+            })
+
+            setAmount(currentAmount - amountSpend);
+
+            setData((previous) => [
+                ...previous,
+                {
+                    id: result.$id,
+                    add: false,
+                    amount: amountSpend,
+                    source: source,
+                    date: date
+                }
+            ]);
+        } catch (error) {
+            alert("Failed to record transaction. Please try again.");
+            setAmount(currentAmount);
+            return;
+        }
 
         // Reset form
         setBalance("");

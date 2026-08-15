@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { List } from './index'
-import database from "../database/db";
+import database from "../appwrite/database/db";
 import { useSelector } from "react-redux";
 
 function History(
@@ -30,7 +30,7 @@ function History(
 
         getHistory()
 
-    }, [user])
+    }, [user, setData])
 
     return (
         <main className="min-h-screen bg-gray-950 text-white px-4 py-10">
