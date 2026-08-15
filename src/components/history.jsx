@@ -3,7 +3,7 @@ import { List } from './index'
 import database from "../database/db";
 import { useSelector } from "react-redux";
 
-async function History(
+function History(
     {
         data,
         setData
@@ -14,7 +14,7 @@ async function History(
 
     useEffect(() => {
         const getHistory = async () => {
-            if (user) {
+            if (!user) {
                 return
             }
             try {

@@ -38,7 +38,7 @@ function SpendMoney({
         setAmount(currentAmount - amountSpend);
 
         database.createTransaction({
-            id: user.$id,
+            userId: user.$id,
             add: false,
             amount: amountSpend,
             source: source,

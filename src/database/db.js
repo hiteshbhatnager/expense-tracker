@@ -6,8 +6,8 @@ export class Database {
 
     constructor() {
         this.client
-            .setEndpoint(import.meta.env.VITE_ENDPOINT)
-            .setProject(import.meta.env.VITE_PROJECT)
+            .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
+            .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID)
 
         this.database = new Databases(this.client)
     }
@@ -21,8 +21,8 @@ export class Database {
     }) {
         try {
             return await this.database.createDocument(
-                import.meta.env.VITE_DATABASE_ID,
-                import.meta.env.VITE_COLLECTION_ID,
+                import.meta.env.VITE_APPWRITE_DATABASE_ID,
+                import.meta.env.VITE_APPWRITE_COLLECTION_ID,
                 ID.unique(),
                 {
                     userId,

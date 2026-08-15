@@ -32,7 +32,7 @@ function AddMoney({
         setAmount(currentAmount + amountAdd)
 
         database.createTransaction({
-            id: user.$id,
+            userId: user.$id,
             add: true,
             amount: amountAdd,
             source: source,
